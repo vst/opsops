@@ -1,0 +1,68 @@
+secrets:
+  github:
+    token1:
+      type: "process"
+      value:
+        command: "gh"
+        arguments:
+          - "auth"
+          - "token"
+    token2:
+      type: "script"
+      value:
+        content: |
+          printf "%s" "$(gh auth token)"
+  zamazingo:
+    secret:
+      type: "script"
+      value:
+        content: |
+          printf "this is me: %s" "${USER}"
+  example.com:
+    password:
+      type: "script"
+      value:
+        interpreter: "python3"
+        content: |
+          import netrc
+          import sys
+
+          _login, _account, password = netrc.netrc().authenticators("example.com")
+
+          sys.stdout.write("password")
+  dockerhub:
+    username:
+      type: "op"
+      value:
+        account: "PAIT5BAHSH7DAPEING3EEDIE2E"
+        vault: "Cloud Accounts"
+        item: "yies1Ahl4ahqu1afao4nahshoo"
+        field: "username"
+    password:
+      type: "op"
+      value:
+        account: "PAIT5BAHSH7DAPEING3EEDIE2E"
+        vault: "Cloud Accounts"
+        item: "yies1Ahl4ahqu1afao4nahshoo"
+        field: "password"
+  influxdb:
+    url:
+      type: "op-read"
+      value:
+        account: "IPAEPH0JI3REE8FICHOOVU4CHA"
+        uri: "op://Devops/OokahCuZ4fo8ahphie1aiFa0ei/Config/url"
+    organization:
+      type: "op-read"
+      value:
+        account: "IPAEPH0JI3REE8FICHOOVU4CHA"
+        uri: "op://Devops/OokahCuZ4fo8ahphie1aiFa0ei/Config/organization"
+    bucket:
+      type: "op-read"
+      value:
+        account: "IPAEPH0JI3REE8FICHOOVU4CHA"
+        uri: "op://Devops/OokahCuZ4fo8ahphie1aiFa0ei/Config/bucket"
+    token:
+      type: "op-read"
+      value:
+        account: "IPAEPH0JI3REE8FICHOOVU4CHA"
+        uri: "op://Devops/OokahCuZ4fo8ahphie1aiFa0ei/API Tokens/write-only"

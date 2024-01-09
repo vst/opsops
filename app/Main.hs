@@ -1,6 +1,6 @@
 module Main where
 
-import qualified Hebele.Cli as Cli
+import qualified Opsops.Cli as Cli
 import System.Exit (exitWith)
 
 

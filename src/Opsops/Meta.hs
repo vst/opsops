@@ -1,27 +1,27 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 -- | This module provides project metadata information definitions.
-module Hebele.Meta where
+module Opsops.Meta where
 
 import qualified Data.Text as T
 import Data.Version (Version, showVersion)
-import qualified Paths_haskell_template_hebele as Paths
+import qualified Paths_opsops as Paths
 
 
 -- | Application name.
 --
 -- >>> name
--- "haskell-template-hebele"
+-- "opsops"
 name :: T.Text
-name = "haskell-template-hebele"
+name = "opsops"
 
 
 -- | Application title.
 --
 -- >>> title
--- "Haskell Project Template"
+-- "SOPS(-Nix) Goodies"
 title :: T.Text
-title = "Haskell Project Template"
+title = "SOPS(-Nix) Goodies"
 
 
 -- | Application version.

@@ -1,13 +1,13 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 -- | This module provides top-level definitions for the CLI program.
-module Hebele.Cli where
+module Opsops.Cli where
 
 import Control.Applicative ((<**>), (<|>))
 import Control.Monad (join)
 import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
-import qualified Hebele.Meta as Meta
+import qualified Opsops.Meta as Meta
 import qualified Options.Applicative as OA
 import System.Exit (ExitCode (..))
 
@@ -102,7 +102,7 @@ infoModHeader =
 -- | Footer 'OA.InfoMod'.
 infoModFooter :: OA.InfoMod a
 infoModFooter =
-  OA.footer "See <https://github.com/vst/haskell-template-hebele> for help and feedback."
+  OA.footer "See <https://github.com/vst/opsops> for help and feedback."
 
 
 -- | Tests a parser with given arguments.

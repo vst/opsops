@@ -1,0 +1,64 @@
+name: haskell-template-hebele
+version: 0.0.0
+github: "vst/haskell-template-hebele"
+license: MIT
+author: "Vehbi Sinan Tunalioglu"
+maintainer: "vst@vsthost.com"
+copyright: "Copyright (c) 2024 Vehbi Sinan Tunalioglu"
+
+extra-source-files:
+  - README.md
+  - CHANGELOG.md
+
+description: Please see the README on GitHub at <https://github.com/vst/haskell-template-hebele#readme>
+
+dependencies:
+  - base >= 4.7 && < 5
+
+library:
+  source-dirs: src
+  ghc-options:
+    - -Wall
+    - -Werror
+    - -Wunused-packages
+  dependencies:
+    - optparse-applicative
+    - text
+
+executables:
+  haskell-template-hebele:
+    main: Main.hs
+    source-dirs: app
+    ghc-options:
+      - -Wall
+      - -Werror
+      - -Wunused-packages
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+    dependencies:
+      - haskell-template-hebele
+
+tests:
+  haskell-template-hebele-test:
+    main: Spec.hs
+    source-dirs: test/spec
+    ghc-options:
+      - -Wall
+      - -Werror
+      - -Wunused-packages
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+    dependencies: []
+
+  haskell-template-hebele-doctest:
+    main: doctest.hs
+    source-dirs: test/doctest
+    ghc-options:
+      - -Wall
+      - -Werror
+      - -threaded
+    dependencies:
+      - haskell-template-hebele
+      - doctest

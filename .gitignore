@@ -1,0 +1,7 @@
+*.cabal
+*~
+/.direnv
+/dist
+/dist-newstyle
+/result
+/tmp

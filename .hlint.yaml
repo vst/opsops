@@ -1,0 +1,46 @@
+############################
+# HLint Configuration File #
+############################
+
+# See https://github.com/ndmitchell/hlint
+
+#######################
+# MODULE RESTRICTIONS #
+#######################
+
+- modules:
+    - { name: Control.Monad.Error, within: [] }
+    - { name: [Data.Aeson], as: Aeson }
+    - { name: Data.ByteString, as: B }
+    - { name: Data.ByteString.Char8, as: BC }
+    - { name: Data.ByteString.Lazy, as: BL }
+    - { name: Data.ByteString.Lazy.Char8, as: BLC }
+    - { name: Data.Text, as: T }
+    - { name: Data.Text.Lazy, as: TL }
+    - { name: Data.Text.Encoding, as: TE }
+    - { name: Zamazingo.Text, as: Z.Text, importStyle: qualified, asRequired: true }
+    - { name: Data.Text.IO, as: TIO }
+    - { name: Options.Applicative, as: OA }
+
+##########################
+# EXTENSION RESTRICTIONS #
+##########################
+
+- extensions:
+    - default: false # All extension are banned by default.
+    - name:
+        - OverloadedStrings
+
+################
+# CUSTOM RULES #
+################
+
+# Replace a $ b $ c with a . b $ c
+- group: { name: dollar, enabled: true }
+
+# Generalise map to fmap, ++ to <>
+- group: { name: generalise, enabled: true }
+
+# Use tshow
+- warn: { lhs: Data.Text.pack . show, rhs: Zamazingo.Text.tshow }
+- warn: { lhs: Data.Text.pack (show a), rhs: Zamazingo.Text.tshow a }

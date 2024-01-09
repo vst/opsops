@@ -30,6 +30,9 @@
     - default: false # All extension are banned by default.
     - name:
         - OverloadedStrings
+        - QuasiQuotes
+        - RecordWildCards
+        - TupleSections
 
 ################
 # CUSTOM RULES #

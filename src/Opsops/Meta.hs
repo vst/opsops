@@ -46,3 +46,11 @@ versionString = showVersion version
 -- "0.0.0"
 versionText :: T.Text
 versionText = T.pack versionString
+
+
+-- | Website homepage URL.
+--
+-- >>> homepage
+-- "https://github.com/vst/opsops"
+homepage :: T.Text
+homepage = "https://github.com/vst/opsops"

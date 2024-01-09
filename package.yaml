@@ -22,8 +22,17 @@ library:
     - -Werror
     - -Wunused-packages
   dependencies:
+    - aeson
+    - bytestring
+    - containers
+    - exceptions
     - optparse-applicative
+    - path
+    - path-io
+    - string-interpolate
     - text
+    - typed-process
+    - yaml
 
 executables:
   opsops:

@@ -65,7 +65,7 @@ commandNormalize =
         <> OA.footer "This command prints the canonical specification."
     parser =
       doNormalize
-        <$> OA.strOption (OA.short 'i' <> OA.long "input" <> OA.help "Path to the specification file.")
+        <$> OA.strOption (OA.short 'i' <> OA.long "input" <> OA.action "file" <> OA.help "Path to the specification file.")
 
 
 -- | @normalize@ CLI command program.
@@ -92,7 +92,7 @@ commandRender =
         <> OA.footer "This command renders the specification into clear secrets."
     parser =
       doRender
-        <$> OA.strOption (OA.short 'i' <> OA.long "input" <> OA.help "Path to the specification file.")
+        <$> OA.strOption (OA.short 'i' <> OA.long "input" <> OA.action "file" <> OA.help "Path to the specification file.")
 
 
 -- | @render@ CLI command program.
@@ -137,7 +137,7 @@ commandSnippetSopsNix =
         <> OA.footer "This command prints sample sops-nix snippet."
     parser =
       doSnippetSopsNix
-        <$> OA.strOption (OA.short 'i' <> OA.long "input" <> OA.help "Path to the specification file.")
+        <$> OA.strOption (OA.short 'i' <> OA.long "input" <> OA.action "file" <> OA.help "Path to the specification file.")
         <*> OA.optional (OA.strOption (OA.short 'p' <> OA.long "prefix" <> OA.help "Optional prefix for sops-nix path."))
 
 

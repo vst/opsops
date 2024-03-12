@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.3](https://github.com/vst/opsops/compare/v0.0.2...v0.0.3) (2024-03-12)
+
+
+### Bug Fixes
+
+* **pkg:** add interactive bash to PATH on Nix-based installations ([9818798](https://github.com/vst/opsops/commit/98187988a99efe9603b836f4dc84ac42619d5054))
+
 ## [0.0.2](https://github.com/vst/opsops/compare/v0.0.1...v0.0.2) (2024-03-11)
 
 

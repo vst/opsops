@@ -101,7 +101,9 @@ let
   ## Get the installable application (only static executable):
   thisApp = mkHaskellApp {
     drv = thisHaskell.${thisHaskellPackages.main.name};
-    binPaths = [ ];
+    binPaths = [
+      pkgs.bashInteractive ## Added for bash-based CLI option completions
+    ];
   };
 
   ############

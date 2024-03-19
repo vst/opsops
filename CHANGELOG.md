@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.4](https://github.com/vst/opsops/compare/v0.0.3...v0.0.4) (2024-03-19)
+
+
+### Bug Fixes
+
+* **nix:** fix shell completion installation ([c0a20df](https://github.com/vst/opsops/commit/c0a20df627d30d50d94f063154385276b231fd48))
+
 ## [0.0.3](https://github.com/vst/opsops/compare/v0.0.2...v0.0.3) (2024-03-12)
 
 

@@ -23,18 +23,10 @@ let
     ## Wrap program:
     wrapProgram $out/bin/${name} --prefix PATH : ${binPath}
 
-    ## Create a temporary directory to store interim artifacts:
-    _tmpdir=$(mktemp -d)
-
-    ## Create completion scripts:
-    $out/bin/${name} --bash-completion-script "$out/bin/${name}" > ''${_tmpdir}/completion.bash
-    $out/bin/${name} --fish-completion-script "$out/bin/${name}" > ''${_tmpdir}/completion.fish
-    $out/bin/${name}  --zsh-completion-script "$out/bin/${name}" > ''${_tmpdir}/completion.zsh
-
     ## Install completion scripts:
-    installShellCompletion --bash ''${_tmpdir}/completion.bash
-    installShellCompletion --fish ''${_tmpdir}/completion.fish
-    installShellCompletion  --zsh ''${_tmpdir}/completion.zsh
+    installShellCompletion --bash --name ${name}.bash <($out/bin/${name} --bash-completion-script "$out/bin/${name}")
+    installShellCompletion --fish --name ${name}.fish <($out/bin/${name} --fish-completion-script "$out/bin/${name}")
+    installShellCompletion --zsh  --name _${name}     <($out/bin/${name} --zsh-completion-script  "$out/bin/${name}")
   '';
 in
 pkgs.haskell.lib.justStaticExecutables (

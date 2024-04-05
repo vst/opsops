@@ -121,6 +121,8 @@ data OpRead = OpRead
   { opReadAccount :: !(Maybe T.Text)
   , opReadUri :: !T.Text
   , opReadNewline :: !Bool
+  , opReadStrip :: !(Maybe Strip)
+  , opReadTrailingNewline :: !(Maybe Newline)
   }
   deriving (Eq, Ord, Show)
 
@@ -128,28 +130,30 @@ data OpRead = OpRead
 -- | 'Aeson.FromJSON' instance for 'OpRead'.
 --
 -- >>> Aeson.eitherDecode @OpRead "{\"uri\":\"op://Devops/OokahCuZ4fo8ahphie1aiFa0ei/Config/url\"}"
--- Right (OpRead {opReadAccount = Nothing, opReadUri = "op://Devops/OokahCuZ4fo8ahphie1aiFa0ei/Config/url", opReadNewline = False})
+-- Right (OpRead {opReadAccount = Nothing, opReadUri = "op://Devops/OokahCuZ4fo8ahphie1aiFa0ei/Config/url", opReadNewline = False, opReadStrip = Nothing, opReadTrailingNewline = Nothing})
 -- >>> Aeson.eitherDecode @OpRead "{\"account\":\"IPAEPH0JI3REE8FICHOOVU4CHA\",\"newline\":false,\"uri\":\"op://Devops/OokahCuZ4fo8ahphie1aiFa0ei/Config/url\"}"
--- Right (OpRead {opReadAccount = Just "IPAEPH0JI3REE8FICHOOVU4CHA", opReadUri = "op://Devops/OokahCuZ4fo8ahphie1aiFa0ei/Config/url", opReadNewline = False})
+-- Right (OpRead {opReadAccount = Just "IPAEPH0JI3REE8FICHOOVU4CHA", opReadUri = "op://Devops/OokahCuZ4fo8ahphie1aiFa0ei/Config/url", opReadNewline = False, opReadStrip = Nothing, opReadTrailingNewline = Nothing})
 instance Aeson.FromJSON OpRead where
   parseJSON = Aeson.withObject "OpRead" $ \o ->
     OpRead
       <$> (o .:? "account")
       <*> (o .: "uri")
       <*> (o .:? "newline" .!= False)
+      <*> (o .:? "strip")
+      <*> (o .:? "trailingNewline")
 
 
 -- | 'Aeson.ToJSON' instance for 'OpRead'.
 --
--- >>> let opRead1 = OpRead {opReadAccount=Nothing, opReadUri="op://Devops/OokahCuZ4fo8ahphie1aiFa0ei/Config/url", opReadNewline=False}
+-- >>> let opRead1 = OpRead {opReadAccount=Nothing, opReadUri="op://Devops/OokahCuZ4fo8ahphie1aiFa0ei/Config/url", opReadNewline=False, opReadStrip=Nothing, opReadTrailingNewline=Nothing}
 -- >>> Aeson.encode opRead1
--- "{\"account\":null,\"newline\":false,\"uri\":\"op://Devops/OokahCuZ4fo8ahphie1aiFa0ei/Config/url\"}"
+-- "{\"account\":null,\"newline\":false,\"strip\":null,\"trailingNewline\":null,\"uri\":\"op://Devops/OokahCuZ4fo8ahphie1aiFa0ei/Config/url\"}"
 -- >>> _testJsonRoundtrip opRead1
 -- True
 --
--- >>> let opRead2 = OpRead {opReadAccount=Just "IPAEPH0JI3REE8FICHOOVU4CHA", opReadUri="op://Devops/OokahCuZ4fo8ahphie1aiFa0ei/Config/url", opReadNewline=False}
+-- >>> let opRead2 = OpRead {opReadAccount=Just "IPAEPH0JI3REE8FICHOOVU4CHA", opReadUri="op://Devops/OokahCuZ4fo8ahphie1aiFa0ei/Config/url", opReadNewline=False, opReadStrip=Nothing, opReadTrailingNewline=Nothing}
 -- >>> Aeson.encode opRead2
--- "{\"account\":\"IPAEPH0JI3REE8FICHOOVU4CHA\",\"newline\":false,\"uri\":\"op://Devops/OokahCuZ4fo8ahphie1aiFa0ei/Config/url\"}"
+-- "{\"account\":\"IPAEPH0JI3REE8FICHOOVU4CHA\",\"newline\":false,\"strip\":null,\"trailingNewline\":null,\"uri\":\"op://Devops/OokahCuZ4fo8ahphie1aiFa0ei/Config/url\"}"
 -- >>> _testJsonRoundtrip opRead2
 -- True
 instance Aeson.ToJSON OpRead where
@@ -158,6 +162,8 @@ instance Aeson.ToJSON OpRead where
       [ "account" .= opReadAccount
       , "uri" .= opReadUri
       , "newline" .= opReadNewline
+      , "strip" .= opReadStrip
+      , "trailingNewline" .= opReadTrailingNewline
       ]
 
 
@@ -174,6 +180,8 @@ data Op = Op
   , opSection :: !(Maybe T.Text)
   , opField :: !T.Text
   , opNewline :: !Bool
+  , opStrip :: !(Maybe Strip)
+  , opTrailingNewline :: !(Maybe Newline)
   }
   deriving (Eq, Ord, Show)
 
@@ -181,9 +189,9 @@ data Op = Op
 -- | 'Aeson.FromJSON' instance for 'Op'.
 --
 -- >>> Aeson.eitherDecode @Op "{\"account\":null,\"field\":\"username\",\"item\":\"yies1Ahl4ahqu1afao4nahshoo\",\"newline\":false,\"section\":null,\"vault\":\"Cloud Accounts\"}"
--- Right (Op {opAccount = Nothing, opVault = "Cloud Accounts", opItem = "yies1Ahl4ahqu1afao4nahshoo", opSection = Nothing, opField = "username", opNewline = False})
+-- Right (Op {opAccount = Nothing, opVault = "Cloud Accounts", opItem = "yies1Ahl4ahqu1afao4nahshoo", opSection = Nothing, opField = "username", opNewline = False, opStrip = Nothing, opTrailingNewline = Nothing})
 -- >>> Aeson.eitherDecode @Op "{\"account\":\"PAIT5BAHSH7DAPEING3EEDIE2E\",\"field\":\"token1\",\"item\":\"yies1Ahl4ahqu1afao4nahshoo\",\"newline\":false,\"section\":\"API Tokens\",\"vault\":\"Cloud Accounts\"}"
--- Right (Op {opAccount = Just "PAIT5BAHSH7DAPEING3EEDIE2E", opVault = "Cloud Accounts", opItem = "yies1Ahl4ahqu1afao4nahshoo", opSection = Just "API Tokens", opField = "token1", opNewline = False})
+-- Right (Op {opAccount = Just "PAIT5BAHSH7DAPEING3EEDIE2E", opVault = "Cloud Accounts", opItem = "yies1Ahl4ahqu1afao4nahshoo", opSection = Just "API Tokens", opField = "token1", opNewline = False, opStrip = Nothing, opTrailingNewline = Nothing})
 instance Aeson.FromJSON Op where
   parseJSON = Aeson.withObject "Op" $ \o ->
     Op
@@ -193,19 +201,21 @@ instance Aeson.FromJSON Op where
       <*> (o .:? "section")
       <*> (o .: "field")
       <*> (o .:? "newline" .!= False)
+      <*> (o .:? "strip")
+      <*> (o .:? "trailingNewline")
 
 
 -- | 'Aeson.ToJSON' instance for 'Op'.
 --
--- >>> let op1 = Op {opAccount=Nothing, opVault="Cloud Accounts", opItem="yies1Ahl4ahqu1afao4nahshoo", opSection=Nothing, opField="username", opNewline=False}
+-- >>> let op1 = Op {opAccount=Nothing, opVault="Cloud Accounts", opItem="yies1Ahl4ahqu1afao4nahshoo", opSection=Nothing, opField="username", opNewline=False, opStrip=Nothing, opTrailingNewline=Nothing}
 -- >>> Aeson.encode op1
--- "{\"account\":null,\"field\":\"username\",\"item\":\"yies1Ahl4ahqu1afao4nahshoo\",\"newline\":false,\"section\":null,\"vault\":\"Cloud Accounts\"}"
+-- "{\"account\":null,\"field\":\"username\",\"item\":\"yies1Ahl4ahqu1afao4nahshoo\",\"newline\":false,\"section\":null,\"strip\":null,\"trailingNewline\":null,\"vault\":\"Cloud Accounts\"}"
 -- >>> _testJsonRoundtrip op1
 -- True
 --
--- >>> let op2 = Op {opAccount=Just "PAIT5BAHSH7DAPEING3EEDIE2E", opVault="Cloud Accounts", opItem="yies1Ahl4ahqu1afao4nahshoo", opSection=Just "API Tokens", opField="token1", opNewline=False}
+-- >>> let op2 = Op {opAccount=Just "PAIT5BAHSH7DAPEING3EEDIE2E", opVault="Cloud Accounts", opItem="yies1Ahl4ahqu1afao4nahshoo", opSection=Just "API Tokens", opField="token1", opNewline=False, opStrip=Nothing, opTrailingNewline=Nothing}
 -- >>> Aeson.encode op2
--- "{\"account\":\"PAIT5BAHSH7DAPEING3EEDIE2E\",\"field\":\"token1\",\"item\":\"yies1Ahl4ahqu1afao4nahshoo\",\"newline\":false,\"section\":\"API Tokens\",\"vault\":\"Cloud Accounts\"}"
+-- "{\"account\":\"PAIT5BAHSH7DAPEING3EEDIE2E\",\"field\":\"token1\",\"item\":\"yies1Ahl4ahqu1afao4nahshoo\",\"newline\":false,\"section\":\"API Tokens\",\"strip\":null,\"trailingNewline\":null,\"vault\":\"Cloud Accounts\"}"
 -- >>> _testJsonRoundtrip op2
 -- True
 instance Aeson.ToJSON Op where
@@ -217,6 +227,8 @@ instance Aeson.ToJSON Op where
       , "section" .= opSection
       , "field" .= opField
       , "newline" .= opNewline
+      , "strip" .= opStrip
+      , "trailingNewline" .= opTrailingNewline
       ]
 
 
@@ -227,6 +239,8 @@ opToOpRead Op {..} =
     { opReadUri = "op://" <> opVault <> "/" <> opItem <> "/" <> maybe "" (<> "/") opSection <> opField
     , opReadNewline = opNewline
     , opReadAccount = opAccount
+    , opReadStrip = opStrip
+    , opReadTrailingNewline = opTrailingNewline
     }
 
 
@@ -240,6 +254,8 @@ data Process = Process
   { processCommand :: !T.Text -- TODO: Shall we use "P.SomeBase P.File"?
   , processArguments :: ![T.Text]
   , processEnvironment :: !(Map.Map T.Text T.Text)
+  , processStrip :: !(Maybe Strip)
+  , processTrailingNewline :: !(Maybe Newline)
   }
   deriving (Eq, Ord, Show)
 
@@ -247,28 +263,30 @@ data Process = Process
 -- | 'Aeson.FromJSON' instance for 'Process'.
 --
 -- >>> Aeson.eitherDecode @Process "{\"arguments\":[\"auth\",\"token\"],\"command\":\"gh\",\"environment\":{}}"
--- Right (Process {processCommand = "gh", processArguments = ["auth","token"], processEnvironment = fromList []})
+-- Right (Process {processCommand = "gh", processArguments = ["auth","token"], processEnvironment = fromList [], processStrip = Nothing, processTrailingNewline = Nothing})
 -- >>> Aeson.eitherDecode @Process "{\"arguments\":[],\"command\":\"some-secret\",\"environment\":{\"SECRET\":\"THIS\"}}"
--- Right (Process {processCommand = "some-secret", processArguments = [], processEnvironment = fromList [("SECRET","THIS")]})
+-- Right (Process {processCommand = "some-secret", processArguments = [], processEnvironment = fromList [("SECRET","THIS")], processStrip = Nothing, processTrailingNewline = Nothing})
 instance Aeson.FromJSON Process where
   parseJSON = Aeson.withObject "Process" $ \o ->
     Process
       <$> (o .: "command")
       <*> (o .:? "arguments" .!= mempty)
       <*> (o .:? "environment" .!= mempty)
+      <*> (o .:? "strip")
+      <*> (o .:? "trailingNewline")
 
 
 -- | 'Aeson.ToJSON' instance for 'Process'.
 --
--- >>> let process1 = Process {processCommand="gh", processArguments=["auth", "token"], processEnvironment=mempty}
+-- >>> let process1 = Process {processCommand="gh", processArguments=["auth", "token"], processEnvironment=mempty, processStrip=Nothing, processTrailingNewline=Nothing}
 -- >>> Aeson.encode process1
--- "{\"arguments\":[\"auth\",\"token\"],\"command\":\"gh\",\"environment\":{}}"
+-- "{\"arguments\":[\"auth\",\"token\"],\"command\":\"gh\",\"environment\":{},\"strip\":null,\"trailingNewline\":null}"
 -- >>> _testJsonRoundtrip process1
 -- True
 --
--- >>> let process2 = Process {processCommand="some-secret", processArguments=[], processEnvironment=Map.fromList [("SECRET", "THIS")]}
+-- >>> let process2 = Process {processCommand="some-secret", processArguments=[], processEnvironment=Map.fromList [("SECRET", "THIS")], processStrip=Nothing, processTrailingNewline=Nothing}
 -- >>> Aeson.encode process2
--- "{\"arguments\":[],\"command\":\"some-secret\",\"environment\":{\"SECRET\":\"THIS\"}}"
+-- "{\"arguments\":[],\"command\":\"some-secret\",\"environment\":{\"SECRET\":\"THIS\"},\"strip\":null,\"trailingNewline\":null}"
 -- >>> _testJsonRoundtrip process2
 -- True
 instance Aeson.ToJSON Process where
@@ -277,6 +295,8 @@ instance Aeson.ToJSON Process where
       [ "command" .= processCommand
       , "arguments" .= processArguments
       , "environment" .= processEnvironment
+      , "strip" .= processStrip
+      , "trailingNewline" .= processTrailingNewline
       ]
 
 
@@ -289,6 +309,8 @@ data Script = Script
   { scriptInterpreter :: !T.Text
   , scriptArguments :: ![T.Text]
   , scriptContent :: !T.Text
+  , scriptStrip :: !(Maybe Strip)
+  , scriptTrailingNewline :: !(Maybe Newline)
   }
   deriving (Eq, Ord, Show)
 
@@ -296,36 +318,38 @@ data Script = Script
 -- | 'Aeson.FromJSON' instance for 'Script'.
 --
 -- >>> Aeson.eitherDecode @Script "{\"content\": \"echo hebele\"}"
--- Right (Script {scriptInterpreter = "bash", scriptArguments = [], scriptContent = "echo hebele"})
+-- Right (Script {scriptInterpreter = "bash", scriptArguments = [], scriptContent = "echo hebele", scriptStrip = Nothing, scriptTrailingNewline = Nothing})
 -- >>> Aeson.eitherDecode @Script "{\"interpreter\": \"python3\", \"content\": \"print(\\\"hebele\\\")\"}"
--- Right (Script {scriptInterpreter = "python3", scriptArguments = [], scriptContent = "print(\"hebele\")"})
+-- Right (Script {scriptInterpreter = "python3", scriptArguments = [], scriptContent = "print(\"hebele\")", scriptStrip = Nothing, scriptTrailingNewline = Nothing})
 -- >>> Aeson.eitherDecode @Script "{\"interpreter\": \"bash\", \"arguments\": [\"--noprofile\"], \"content\": \"echo hebele\"}"
--- Right (Script {scriptInterpreter = "bash", scriptArguments = ["--noprofile"], scriptContent = "echo hebele"})
+-- Right (Script {scriptInterpreter = "bash", scriptArguments = ["--noprofile"], scriptContent = "echo hebele", scriptStrip = Nothing, scriptTrailingNewline = Nothing})
 instance Aeson.FromJSON Script where
   parseJSON = Aeson.withObject "Script" $ \o ->
     Script
       <$> (o .:? "interpreter" .!= "bash")
       <*> (o .:? "arguments" .!= mempty)
       <*> (o .: "content")
+      <*> (o .:? "strip")
+      <*> (o .:? "trailingNewline")
 
 
 -- | 'Aeson.ToJSON' instance for 'Script'.
 --
--- >>> let script1 = Script {scriptInterpreter = "bash", scriptArguments = [], scriptContent = "echo hebele"}
+-- >>> let script1 = Script {scriptInterpreter = "bash", scriptArguments = [], scriptContent = "echo hebele", scriptStrip = Nothing, scriptTrailingNewline = Nothing}
 -- >>> Aeson.encode script1
--- "{\"arguments\":[],\"content\":\"echo hebele\",\"interpreter\":\"bash\"}"
+-- "{\"arguments\":[],\"content\":\"echo hebele\",\"interpreter\":\"bash\",\"strip\":null,\"trailingNewline\":null}"
 -- >>> _testJsonRoundtrip script1
 -- True
 --
--- >>> let script2 = Script {scriptInterpreter = "python3", scriptArguments = [], scriptContent = "print(\"hebele\")"}
+-- >>> let script2 = Script {scriptInterpreter = "python3", scriptArguments = [], scriptContent = "print(\"hebele\")", scriptStrip = Nothing, scriptTrailingNewline = Nothing}
 -- >>> Aeson.encode script2
--- "{\"arguments\":[],\"content\":\"print(\\\"hebele\\\")\",\"interpreter\":\"python3\"}"
+-- "{\"arguments\":[],\"content\":\"print(\\\"hebele\\\")\",\"interpreter\":\"python3\",\"strip\":null,\"trailingNewline\":null}"
 -- >>> _testJsonRoundtrip script2
 -- True
 --
--- >>> let script3 = Script {scriptInterpreter = "bash", scriptArguments = ["--noprofile"], scriptContent = "echo hebele"}
+-- >>> let script3 = Script {scriptInterpreter = "bash", scriptArguments = ["--noprofile"], scriptContent = "echo hebele", scriptStrip = Nothing, scriptTrailingNewline = Nothing}
 -- >>> Aeson.encode script3
--- "{\"arguments\":[\"--noprofile\"],\"content\":\"echo hebele\",\"interpreter\":\"bash\"}"
+-- "{\"arguments\":[\"--noprofile\"],\"content\":\"echo hebele\",\"interpreter\":\"bash\",\"strip\":null,\"trailingNewline\":null}"
 -- >>> _testJsonRoundtrip script3
 -- True
 instance Aeson.ToJSON Script where
@@ -334,7 +358,84 @@ instance Aeson.ToJSON Script where
       [ "interpreter" .= scriptInterpreter
       , "arguments" .= scriptArguments
       , "content" .= scriptContent
+      , "strip" .= scriptStrip
+      , "trailingNewline" .= scriptTrailingNewline
       ]
+
+
+-- | Data definition for whitespace-trimming options.
+data Strip
+  = StripLeft
+  | StripRight
+  | StripBoth
+  deriving (Eq, Ord, Show)
+
+
+-- | 'Aeson.FromJSON' instance for 'Strip'.
+--
+-- >>> Aeson.eitherDecode @Strip "\"left\""
+-- Right StripLeft
+-- >>> Aeson.eitherDecode @Strip "\"right\""
+-- Right StripRight
+-- >>> Aeson.eitherDecode @Strip "\"both\""
+-- Right StripBoth
+-- >>> Aeson.eitherDecode @Strip "\"unknown\""
+-- Left "Error in $: Unknown strip value: unknown"
+instance Aeson.FromJSON Strip where
+  parseJSON = Aeson.withText "Strip" $ \t -> case t of
+    "left" -> pure StripLeft
+    "right" -> pure StripRight
+    "both" -> pure StripBoth
+    _ -> fail ("Unknown strip value: " <> T.unpack t)
+
+
+-- | 'Aeson.ToJSON' instance for 'Strip'.
+--
+-- >>> Aeson.encode StripLeft
+-- "\"left\""
+-- >>> Aeson.encode StripRight
+-- "\"right\""
+-- >>> Aeson.encode StripBoth
+-- "\"both\""
+instance Aeson.ToJSON Strip where
+  toJSON v = case v of
+    StripLeft -> "left"
+    StripRight -> "right"
+    StripBoth -> "both"
+
+
+-- | Data definition for newline options.
+data Newline
+  = NewlineLf
+  | NewlineCrlf
+  deriving (Eq, Ord, Show)
+
+
+-- | 'Aeson.FromJSON' instance for 'Newline'.
+--
+-- >>> Aeson.eitherDecode @Newline "\"lf\""
+-- Right NewlineLf
+-- >>> Aeson.eitherDecode @Newline "\"crlf\""
+-- Right NewlineCrlf
+-- >>> Aeson.eitherDecode @Newline "\"unknown\""
+-- Left "Error in $: Unknown strip value: unknown"
+instance Aeson.FromJSON Newline where
+  parseJSON = Aeson.withText "Newline" $ \t -> case t of
+    "lf" -> pure NewlineLf
+    "crlf" -> pure NewlineCrlf
+    _ -> fail ("Unknown strip value: " <> T.unpack t)
+
+
+-- | 'Aeson.ToJSON' instance for 'Newline'.
+--
+-- >>> Aeson.encode NewlineLf
+-- "\"lf\""
+-- >>> Aeson.encode NewlineCrlf
+-- "\"crlf\""
+instance Aeson.ToJSON Newline where
+  toJSON v = case v of
+    NewlineLf -> "lf"
+    NewlineCrlf -> "crlf"
 
 
 -- * Readers

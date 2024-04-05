@@ -14,6 +14,7 @@ import qualified Data.Text as T
 import qualified Data.Text.Lazy as TL
 import qualified Data.Text.Lazy.Encoding as TLE
 import Opsops.Spec (
+  Newline (..),
   OpRead (..),
   Process (..),
   Script (..),
@@ -21,6 +22,7 @@ import Opsops.Spec (
   SecretNode (..),
   SecretNodes (..),
   Spec (..),
+  Strip (..),
   opToOpRead,
  )
 import System.Environment (getEnvironment)
@@ -93,6 +95,8 @@ renderSecret (SecretOpRead OpRead {..}) =
       { processCommand = "op"
       , processArguments = foldMap (\x -> ["--account", x]) opReadAccount <> ["read"] <> ["--no-newline" | not opReadNewline] <> [opReadUri]
       , processEnvironment = mempty
+      , processStrip = opReadStrip
+      , processTrailingNewline = opReadTrailingNewline
       }
 
 
@@ -108,10 +112,11 @@ renderProcess Process {..} = do
     command = T.unpack processCommand
     arguments = fmap T.unpack processArguments
     process = TP.setEnv envars (TP.proc command arguments)
+    postprocess = maybe id applyNewline processTrailingNewline . maybe id applyStrip processStrip
   (ec, out) <- TP.readProcessStdout process
   case ec of
     ExitFailure _ -> liftIO (die "Error running process. Exiting...")
-    ExitSuccess -> pure (TL.toStrict (TLE.decodeUtf8 out))
+    ExitSuccess -> pure (postprocess (TL.toStrict (TLE.decodeUtf8 out)))
 
 
 -- | Attempts to run a 'Script' and return the secret.
@@ -125,7 +130,33 @@ renderScript Script {..} = do
     arguments = fmap T.unpack scriptArguments
     content = TLE.encodeUtf8 (TL.fromStrict scriptContent)
     process = TP.setEnvInherit (TP.setStdin (TP.byteStringInput content) (TP.proc interpreter arguments))
+    postprocess = maybe id applyNewline scriptTrailingNewline . maybe id applyStrip scriptStrip
   (ec, out) <- TP.readProcessStdout process
   case ec of
     ExitFailure _ -> liftIO (die "Error running script. Exiting...")
-    ExitSuccess -> pure (TL.toStrict (TLE.decodeUtf8 out))
+    ExitSuccess -> pure (postprocess (TL.toStrict (TLE.decodeUtf8 out)))
+
+
+-- | Applies given 'Strip' to the given 'T.Text'.
+--
+-- >>> applyStrip StripLeft " \t\n hello \t\n "
+-- "hello \t\n "
+-- >>> applyStrip StripRight " \t\n hello \t\n "
+-- " \t\n hello"
+-- >>> applyStrip StripBoth " \t\n hello \t\n "
+-- "hello"
+applyStrip :: Strip -> T.Text -> T.Text
+applyStrip StripLeft = T.stripStart
+applyStrip StripRight = T.stripEnd
+applyStrip StripBoth = T.strip
+
+
+-- | Applies given 'Newline' to the given 'T.Text'.
+--
+-- >>> applyNewline NewlineLf "hello"
+-- "hello\n"
+-- >>> applyNewline NewlineCrlf "hello"
+-- "hello\r\n"
+applyNewline :: Newline -> T.Text -> T.Text
+applyNewline NewlineLf = (<> "\n")
+applyNewline NewlineCrlf = (<> "\r\n")

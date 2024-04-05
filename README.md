@@ -126,6 +126,8 @@ secrets:
       value:
         command: "zamazingo"
         arguments: ["--hip", "hop"]
+        strip: "both"
+        trailingNewline: "crlf"
   github:
     token:
       type: "script"
@@ -182,6 +184,8 @@ secrets:
         item: yies1Ahl4ahqu1afao4nahshoo
         newline: false
         section: null
+        strip: null
+        trailingNewline: null
         vault: Cloud Accounts
   example.com:
     password:
@@ -196,20 +200,25 @@ secrets:
 
           sys.stdout.write("password")
         interpreter: python3
+        strip: null
+        trailingNewline: null
   github:
     token:
       type: script
       value:
         arguments: []
-        content: |
-          printf "%s" "$(gh auth token)"
+        content: printf "%s" "$(gh auth token)"
         interpreter: bash
+        strip: null
+        trailingNewline: null
   influxdb:
     token:
       type: op-read
       value:
         account: IPAEPH0JI3REE8FICHOOVU4CHA
         newline: false
+        strip: null
+        trailingNewline: null
         uri: op://Devops/OokahCuZ4fo8ahphie1aiFa0ei/API Tokens/write-only
   zamazingo:
     secret:
@@ -220,6 +229,8 @@ secrets:
         - hop
         command: zamazingo
         environment: {}
+        strip: both
+        trailingNewline: crlf
 ```
 </details>
 

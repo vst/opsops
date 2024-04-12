@@ -330,6 +330,12 @@ hpack &&
     cabal haddock -O0
 ```
 
+To check and build:
+
+```sh
+dev-test-build
+```
+
 ## License
 
 See [LICENSE].

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.6](https://github.com/vst/opsops/compare/v0.0.5...v0.0.6) (2024-04-12)
+
+
+### Bug Fixes
+
+* fix GitHub release upload command ([773e811](https://github.com/vst/opsops/commit/773e81148ed07863e7470ee3ee56747262e9532f))
+
 ## [0.0.5](https://github.com/vst/opsops/compare/v0.0.4...v0.0.5) (2024-04-12)
 
 

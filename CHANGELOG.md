@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.0.5](https://github.com/vst/opsops/compare/v0.0.4...v0.0.5) (2024-04-12)
+
+
+### Features
+
+* add script to build statically compiled executables ([82e29c6](https://github.com/vst/opsops/commit/82e29c61eadb74b8237df5bebed0bcc29470bd28))
+* allow leading/trailing whitespace and trailing newline treatment ([c5b27e4](https://github.com/vst/opsops/commit/c5b27e4f5af07b9cd4718db23fa14c1d69f8049c))
+* auto-build+upload statically compiled executable during release ([efe6006](https://github.com/vst/opsops/commit/efe6006d28d82901c6a7e497e1682d78820eed67))
+
 ## [0.0.4](https://github.com/vst/opsops/compare/v0.0.3...v0.0.4) (2024-03-19)
 
 

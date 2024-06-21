@@ -1,0 +1,5 @@
+packages:
+  *.cabal
+
+package *
+  ghc-options: -fwrite-ide-info

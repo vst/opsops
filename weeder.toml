@@ -1,0 +1,11 @@
+roots = [
+  ## Definitions we always need:
+  "^Main.main$",
+  "^Opsops.Cli.*$",
+  "^Paths_opsops.*",
+
+  ## Temporary suspensions:
+  "^Zamazingo.*",
+  "^Opsops.Spec._testJsonRoundtrip$"
+]
+type-class-roots = true

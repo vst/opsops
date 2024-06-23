@@ -28,7 +28,7 @@ jobs:
         if: "${{ steps.release.outputs.release_created }}"
         uses: "cachix/install-nix-action@v25"
         with:
-          nix_path: "nixpkgs=channel:nixos-23.11"
+          nix_path: "nixpkgs=channel:nixos-24.05"
           extra_nix_config: "system-features = benchmark, big-parallel, nixos-test, uid-range, kvm"
 
       - name: "Use magic Nix cache"

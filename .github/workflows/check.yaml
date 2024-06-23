@@ -15,7 +15,7 @@ jobs:
       - name: "Install nix"
         uses: "cachix/install-nix-action@v25"
         with:
-          nix_path: "nixpkgs=channel:nixos-23.11"
+          nix_path: "nixpkgs=channel:nixos-24.05"
 
       - name: "Use magic Nix cache"
         uses: "DeterminateSystems/magic-nix-cache-action@v4"

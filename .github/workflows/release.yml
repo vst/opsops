@@ -16,29 +16,20 @@ jobs:
     steps:
       - id: "release"
         name: "Release"
-        uses: "google-github-actions/release-please-action@v4"
+        uses: "googleapis/release-please-action@v4"
 
       - name: "Checkout Codebase"
         if: "${{ steps.release.outputs.release_created }}"
         uses: "actions/checkout@v4"
-        with:
-          fetch-depth: 0
 
-      - name: "Install nix"
+      - name: "Install Nix"
         if: "${{ steps.release.outputs.release_created }}"
-        uses: "cachix/install-nix-action@v25"
-        with:
-          nix_path: "nixpkgs=channel:nixos-24.05"
-          extra_nix_config: "system-features = benchmark, big-parallel, nixos-test, uid-range, kvm"
-
-      - name: "Use magic Nix cache"
-        if: "${{ steps.release.outputs.release_created }}"
-        uses: "DeterminateSystems/magic-nix-cache-action@v4"
+        uses: "DeterminateSystems/nix-installer-action@v17"
 
       - name: "Build Statically Compiled Executable"
         if: "${{ steps.release.outputs.release_created }}"
         run: |
-          nix-shell --run "bash build-static.sh"
+          nix develop --command bash build-static.sh
 
       - name: "Upload Release Artifact"
         if: "${{ steps.release.outputs.release_created }}"

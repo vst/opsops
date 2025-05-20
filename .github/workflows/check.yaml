@@ -1,4 +1,4 @@
-name: "Check Codebase"
+name: "Check, Test and Build Codebase"
 
 on:
   pull_request:
@@ -12,14 +12,17 @@ jobs:
       - name: "Checkout Codebase"
         uses: "actions/checkout@v4"
 
-      - name: "Install nix"
-        uses: "cachix/install-nix-action@v25"
-        with:
-          nix_path: "nixpkgs=channel:nixos-24.05"
+      - name: "Install Nix"
+        uses: "DeterminateSystems/nix-installer-action@v17"
 
-      - name: "Use magic Nix cache"
-        uses: "DeterminateSystems/magic-nix-cache-action@v4"
-
-      - name: "Check Application"
+      - name: "Check, Test and Build"
         run: |
-          nix-shell --run "dev-test-build"
+          nix develop --command bash -c "cabal update --ignore-project && cabal dev-test-build"
+
+      - name: "Build Docker Image"
+        run: |
+          nix build .#docker
+
+      - name: "Load Docker Image"
+        run: |
+          docker load <./result

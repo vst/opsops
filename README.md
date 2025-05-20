@@ -80,33 +80,9 @@ secrets:
 > If 1Password is used, 1Password CLI application (`op`) must be on
 > `PATH` when running `opsops`.
 
-### Using `nix-env`
-
 ```sh
-nix-env --install --file https://github.com/vst/opsops/archive/main.tar.gz --attr app
+nix profile install --file https://github.com/vst/opsops/archive/main.tar.gz
 ```
-
-### Using `nix-profile`
-
-```sh
-nix profile install --file https://github.com/vst/opsops/archive/main.tar.gz app
-```
-
-### Using `niv`
-
-```sh
-niv add vst/opsops -n opsops
-```
-
-... and then:
-
-```sh
-sources = import ./nix/sources.nix;
-opsops = (import sources.opsops { }).app;
-```
-
-... and finally add `opsops` to your system packages, home packages or
-Nix shell build inputs.
 
 ## Usage
 
@@ -333,7 +309,7 @@ hpack &&
 To check and build:
 
 ```sh
-dev-test-build
+cabal dev-test-build [-c]
 ```
 
 ## License

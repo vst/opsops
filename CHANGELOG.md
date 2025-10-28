@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.7](https://github.com/vst/opsops/compare/v0.0.6...v0.0.7) (2025-10-28)
+
+
+### Features
+
+* add version command ([14a3261](https://github.com/vst/opsops/commit/14a3261679d8e6fb3d3ab2e2436ff209f1729b88))
+
 ## [0.0.6](https://github.com/vst/opsops/compare/v0.0.5...v0.0.6) (2024-04-12)
 
 

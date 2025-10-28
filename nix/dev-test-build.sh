@@ -44,6 +44,11 @@ fi
 
 _clean=""
 
+## Are we being run via cabal command?
+if [ -n "${CABAL:-}" ] && [ "${1}" = "dev-test-build" ]; then
+    shift
+fi
+
 while getopts ":c" opt; do
     case ${opt} in
         c)
@@ -108,7 +113,7 @@ _prettier() {
 _nixpkgs_fmt() {
     _print_header "nixpkgs-fmt (v$(nixpkgs-fmt --version 2>&1 | cut -d' ' -f2))"
     _start=$(_get_now)
-    chronic -- find . -iname "*.nix" -not -path "*/nix/sources.nix" -and -not -path "*/website/node_modules/*.nix" -exec nixpkgs-fmt --check {} \;
+    chronic -- find . -iname "*.nix" -exec nixpkgs-fmt --check {} \;
     _print_success "${_start}" "$(_get_now)"
 }
 
@@ -136,7 +141,7 @@ _cabal_run() {
 _cabal_test() {
     _print_header "cabal test (v$(cabal --numeric-version))"
     _start=$(_get_now)
-    chronic -- cabal v1-test
+    chronic -- cabal v1-test --ghc-options=-O0
     _print_success "${_start}" "$(_get_now)"
 }
 

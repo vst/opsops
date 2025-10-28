@@ -9,7 +9,7 @@
 ## `--enable-executable-stripping`, hence the `strip` command usage.
 
 ## GHC version:
-GHC_VERSION="9.6.6"
+GHC_VERSION="9.8.4"
 
 ## Docker image:
 DOCKER_IMAGE="quay.io/benz0li/ghc-musl:${GHC_VERSION}"

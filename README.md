@@ -61,9 +61,6 @@ secrets:
 <!--toc:start-->
 - [opsops: SOPS(-Nix) Goodies](#opsops-sops-nix-goodies)
   - [Installation](#installation)
-    - [Using `nix-env`](#using-nix-env)
-    - [Using `nix-profile`](#using-nix-profile)
-    - [Using `niv`](#using-niv)
   - [Usage](#usage)
     - [Specification](#specification)
     - [See Canonical Specification](#see-canonical-specification)
@@ -80,9 +77,21 @@ secrets:
 > If 1Password is used, 1Password CLI application (`op`) must be on
 > `PATH` when running `opsops`.
 
+Install `opsops` into your Nix profile:
+
 ```sh
-nix profile install --file https://github.com/vst/opsops/archive/main.tar.gz
+nix profile install github:vst/opsops
 ```
+
+Alternatively, you can run `opsops` via `nix run` without installing it:
+
+```sh
+nix run github:vst/opsops -- --help
+```
+
+Finally, you can download pre-built binaries from releases page:
+
+<https://github.com/vst/opsops/releases>
 
 ## Usage
 
@@ -298,11 +307,11 @@ hpack &&
     direnv reload &&
     fourmolu -i app/ src/ test/ &&
     prettier --write . &&
-    find . -iname "*.nix" -not -path "*/nix/sources.nix" -print0 | xargs --null nixpkgs-fmt &&
+    find . -iname "*.nix" -print0 | xargs --null nixpkgs-fmt &&
     hlint app/ src/ test/ &&
     cabal build -O0 &&
     cabal run -O0 opsops -- --version &&
-    cabal v1-test &&
+    cabal v1-test --ghc-options=-O0 &&
     cabal haddock -O0
 ```
 

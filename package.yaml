@@ -22,11 +22,14 @@ library:
     - bytestring
     - containers
     - exceptions
+    - githash
     - optparse-applicative
     - path
     - path-io
     - string-interpolate
+    - template-haskell
     - text
+    - time
     - typed-process
     - yaml
 executables:

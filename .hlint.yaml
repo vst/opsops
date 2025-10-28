@@ -32,6 +32,7 @@
         - OverloadedStrings
         - QuasiQuotes
         - RecordWildCards
+        - TemplateHaskell
         - TupleSections
 
 ################

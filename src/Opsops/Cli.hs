@@ -6,12 +6,15 @@ module Opsops.Cli where
 
 import Control.Applicative ((<**>), (<|>))
 import Control.Monad (join)
+import qualified Data.Aeson as Aeson
 import qualified Data.ByteString.Char8 as BC
+import qualified Data.ByteString.Lazy.Char8 as BLC
 import Data.String.Interpolate (i)
 import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
 import qualified Data.Yaml as Yaml
 import qualified Opsops.Meta
+import qualified Opsops.Meta as Meta
 import qualified Opsops.Nix
 import qualified Opsops.Render
 import qualified Opsops.Spec
@@ -45,6 +48,7 @@ optProgram =
   commandNormalize
     <|> commandRender
     <|> commandSnippet
+    <|> commandVersion
 
 
 -- * Commands
@@ -148,6 +152,25 @@ doSnippetSopsNix f mP = do
   spec <- Opsops.Spec.readSpecFile path
   TIO.putStrLn (Opsops.Nix.sopsNixSnippet mP spec)
   pure ExitSuccess
+
+
+-- | Definition for @version@ CLI command.
+commandVersion :: OA.Parser (IO ExitCode)
+commandVersion = OA.hsubparser (OA.command "version" (OA.info parser infomod) <> OA.metavar "version")
+  where
+    infomod =
+      OA.fullDesc
+        <> infoModHeader
+        <> OA.progDesc "Show version and build information."
+        <> OA.footer "This command shows version and build information."
+    parser =
+      doVersion
+        <$> OA.switch (OA.short 'j' <> OA.long "json" <> OA.help "Format output in JSON.")
+    doVersion json = do
+      if json
+        then BLC.putStrLn (Aeson.encode Meta.buildInfo)
+        else TIO.putStrLn (Meta.prettyBuildInfo Meta.buildInfo)
+      pure ExitSuccess
 
 
 -- * Helpers

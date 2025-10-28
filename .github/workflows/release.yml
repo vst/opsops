@@ -20,11 +20,11 @@ jobs:
 
       - name: "Checkout Codebase"
         if: "${{ steps.release.outputs.release_created }}"
-        uses: "actions/checkout@v4"
+        uses: "actions/checkout@v5"
 
       - name: "Install Nix"
         if: "${{ steps.release.outputs.release_created }}"
-        uses: "DeterminateSystems/nix-installer-action@v17"
+        uses: "DeterminateSystems/nix-installer-action@v20"
 
       - name: "Build Statically Compiled Executable"
         if: "${{ steps.release.outputs.release_created }}"

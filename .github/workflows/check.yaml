@@ -10,10 +10,10 @@ jobs:
 
     steps:
       - name: "Checkout Codebase"
-        uses: "actions/checkout@v4"
+        uses: "actions/checkout@v5"
 
       - name: "Install Nix"
-        uses: "DeterminateSystems/nix-installer-action@v17"
+        uses: "DeterminateSystems/nix-installer-action@v20"
 
       - name: "Check, Test and Build"
         run: |

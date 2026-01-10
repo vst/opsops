@@ -307,7 +307,12 @@ hpack &&
     direnv reload &&
     fourmolu -i app/ src/ test/ &&
     prettier --write . &&
-    find . -iname "*.nix" -print0 | xargs --null nixpkgs-fmt &&
+    find . -iname "*.nix" -print0 | xargs --null nixfmt &&
+    statix check &&
+    find . -iname "*.sh" -print0 | xargs --null shfmt -w &&
+    find . -iname "*.sh" -print0 | xargs --null shellcheck &&
+    taplo lint &&
+    taplo format &&
     hlint app/ src/ test/ &&
     cabal build -O0 &&
     cabal run -O0 opsops -- --version &&
@@ -318,7 +323,7 @@ hpack &&
 To check and build:
 
 ```sh
-cabal dev-test-build [-c]
+cabal verify [-c]
 ```
 
 ## License

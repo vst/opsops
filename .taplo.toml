@@ -1,0 +1,25 @@
+#:schema taplo://taplo.toml
+
+include = ["*.toml"]
+exclude = []
+
+[formatting]
+
+align_entries = false         # Align entries vertically. Entries that have table headers, comments, or blank lines between them are not aligned.(default false)
+align_comments = true         # Align consecutive comments after entries and items vertically. This applies to comments that are after entries or array items.(default true)
+array_trailing_comma = true   # Put trailing commas for multiline arrays.(default true)
+array_auto_expand = true      # Automatically expand arrays to multiple lines (default true)
+array_auto_collapse = false   # Automatically collapse arrays if they fit in one line.(default true)
+compact_arrays = true         # Omit whitespace padding inside single-line arrays.(default true)
+compact_inline_tables = false # Omit whitespace padding inside inline tables.(default false)
+inline_table_expand = true    # Expand values (e.g. arrays) inside inline tables.(default true)
+compact_entries = false       # Omit whitespace around =. (default false)
+column_width = 80             # Target maximum column width after which arrays are expanded into new lines.(default 80)
+indent_tables = false         # Indent subtables if they come in order(default false)
+indent_entries = false        # Indent entries under tables.(default false)
+indent_string = "  "          # Indentation to use, should be tabs or spaces but technically could be anything. 2 spaces (" ")
+trailing_newline = true       # Add trailing newline to the source. (default true)
+reorder_keys = false          # Alphabetically reorder keys that are not separated by blank lines. (default false)
+reorder_arrays = false        # Alphabetically reorder array values that are not separated by blank lines. (default false)
+allowed_blank_lines = 1       # The maximum amount of consecutive blank lines allowed. (default 2)
+crlf = false                  # Use CRLF line endings. (default false)

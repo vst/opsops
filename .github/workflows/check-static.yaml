@@ -1,0 +1,16 @@
+name: "Check Static Build"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: "Checkout Codebase"
+        uses: "actions/checkout@v6"
+
+      - name: "Build Static Exectutable"
+        run: |
+          bash ./build-static.sh

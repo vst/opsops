@@ -1,4 +1,4 @@
-name: "Check, Test and Build Codebase"
+name: "Check, Lint, Test and Build Codebase"
 
 on:
   pull_request:
@@ -10,14 +10,18 @@ jobs:
 
     steps:
       - name: "Checkout Codebase"
-        uses: "actions/checkout@v5"
+        uses: "actions/checkout@v6"
 
       - name: "Install Nix"
-        uses: "DeterminateSystems/nix-installer-action@v20"
+        uses: "DeterminateSystems/nix-installer-action@v21"
 
-      - name: "Check, Test and Build"
+      - name: "Prepare CI devShell"
         run: |
-          nix develop --command bash -c "cabal update --ignore-project && cabal dev-test-build"
+          nix develop .#ci --command true
+
+      - name: "Verify Codebase"
+        run: |
+          nix develop .#ci --command cabal verify
 
       - name: "Build Docker Image"
         run: |

@@ -1,9 +1,16 @@
 {
   "tabWidth": 2,
+  "printWidth": 120,
   "singleQuote": false,
   "trailingComma": "es5",
-  "printWidth": 120,
   "overrides": [
+    {
+      "files": "*.md",
+      "options": {
+        "printWidth": 80,
+        "proseWrap": "always"
+      }
+    },
     {
       "files": "package.yaml",
       "options": {

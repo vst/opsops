@@ -28,7 +28,7 @@ jobs:
         if: "${{ steps.release.outputs.release_created }}"
         uses: "DeterminateSystems/nix-installer-action@v21"
 
-      - name: "Build Static Exectutable"
+      - name: "Build Static Executable"
         id: "build_static"
         if: "${{ steps.release.outputs.release_created }}"
         run: |

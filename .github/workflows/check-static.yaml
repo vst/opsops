@@ -11,6 +11,6 @@ jobs:
       - name: "Checkout Codebase"
         uses: "actions/checkout@v6"
 
-      - name: "Build Static Exectutable"
+      - name: "Build Static Executable"
         run: |
           bash ./build-static.sh

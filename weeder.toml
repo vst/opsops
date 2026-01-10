@@ -6,6 +6,6 @@ roots = [
 
   ## Temporary suspensions:
   "^Zamazingo.*",
-  "^Opsops.Spec._testJsonRoundtrip$"
+  "^Opsops.Spec._testJsonRoundtrip$",
 ]
 type-class-roots = true

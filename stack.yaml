@@ -1,0 +1,31 @@
+## This resolver should correspond to our nixpkgs version (at least baseline):
+resolver: lts-24.25
+
+## Our local packages:
+packages:
+  - .
+
+## Use the GHC provided by our Docker build image; never download another one:
+system-ghc: true
+install-ghc: false
+
+## Allow running as a different user inside Docker containers:
+allow-different-user: true
+
+## Set the output path for our compiled binaries (stack install):
+local-bin-path: /tmp
+
+## Configure Cabal to build static executables (no shared/dynamic):
+configure-options:
+  "$locals":
+    - --disable-shared
+    - --disable-executable-dynamic
+    - --enable-executable-static
+
+## Make smaller libs without any profiling:
+build:
+  library-profiling: false
+  library-stripping: true
+
+## Extra dependencies pinned to specific commits:
+extra-deps: []

@@ -1,8 +1,11 @@
 *.cabal
 *~
 /.direnv
+/.envrc
+/.stack-work
 /dist
 /dist-newstyle
 /result
+/stack.yaml.lock
 /tmp
 spec.yaml

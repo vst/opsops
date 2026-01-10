@@ -20,20 +20,24 @@ jobs:
 
       - name: "Checkout Codebase"
         if: "${{ steps.release.outputs.release_created }}"
-        uses: "actions/checkout@v5"
+        uses: "actions/checkout@v6"
+        with:
+          fetch-depth: 0
 
       - name: "Install Nix"
         if: "${{ steps.release.outputs.release_created }}"
-        uses: "DeterminateSystems/nix-installer-action@v20"
+        uses: "DeterminateSystems/nix-installer-action@v21"
 
-      - name: "Build Statically Compiled Executable"
+      - name: "Build Static Executable"
+        id: "build_static"
         if: "${{ steps.release.outputs.release_created }}"
         run: |
-          nix develop --command bash build-static.sh
+          bash ./build-static.sh | tee /tmp/build.log
+          echo "executable=$(tail -n1 /tmp/build.log)" >> $GITHUB_OUTPUT
 
       - name: "Upload Release Artifact"
         if: "${{ steps.release.outputs.release_created }}"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         run: |
-          gh release upload "${{ steps.release.outputs.tag_name }}" /tmp/opsops-static-linux-x86_64
+          gh release upload "${{ steps.release.outputs.tag_name }}" "${{ steps.build_static.outputs.executable }}"

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.8](https://github.com/vst/opsops/compare/v0.0.7...v0.0.8) (2026-01-10)
+
+
+### Bug Fixes
+
+* **deps:** upgrade nixpkgs to v25.11, bump flake inputs ([545ae4d](https://github.com/vst/opsops/commit/545ae4d569bd7cde65adb7fc8d2fa6f3e38112cb))
+
 ## [0.0.7](https://github.com/vst/opsops/compare/v0.0.6...v0.0.7) (2025-10-28)
 
 

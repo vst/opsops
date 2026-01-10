@@ -1,5 +1,5 @@
 {
-  description = "Haskell Project Template";
+  description = "opsops - SOPS(-Nix) Goodies";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";

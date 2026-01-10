@@ -5,17 +5,15 @@
 ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/vst/opsops/main)
 ![GitHub License](https://img.shields.io/github/license/vst/opsops)
 
-`opsops` is a command-line application to generate clear [SOPS]
-secrets from a given specification and generate [sops-nix] snippets
-for it.
+`opsops` is a command-line application to generate clear [SOPS] secrets from a
+given specification and generate [sops-nix] snippets for it.
 
-The specification is a YAML/JSON file representing a tree-like
-structure where terminal nodes represent how the clear secrets will be
-generated, and internal nodes represent the "path" to the clear
-secret.
+The specification is a YAML/JSON file representing a tree-like structure where
+terminal nodes represent how the clear secrets will be generated, and internal
+nodes represent the "path" to the clear secret.
 
-Currently, system processes, scripts and 1password field reference
-URIs are supported:
+Currently, system processes, scripts and 1password field reference URIs are
+supported:
 
 ```yaml
 secrets:
@@ -29,7 +27,7 @@ secrets:
     token:
       type: "script"
       value:
-        content: "printf \"%s\" \"$(gh auth token)\""
+        content: 'printf "%s" "$(gh auth token)"'
   example.com:
     password:
       type: "script"
@@ -59,6 +57,7 @@ secrets:
 ```
 
 <!--toc:start-->
+
 - [opsops: SOPS(-Nix) Goodies](#opsops-sops-nix-goodies)
   - [Installation](#installation)
   - [Usage](#usage)
@@ -68,14 +67,15 @@ secrets:
     - [Create Snippet for `sops-nix`](#create-snippet-for-sops-nix)
   - [Development](#development)
   - [License](#license)
+
 <!--toc:end-->
 
 ## Installation
 
 > [!WARNING]
 >
-> If 1Password is used, 1Password CLI application (`op`) must be on
-> `PATH` when running `opsops`.
+> If 1Password is used, 1Password CLI application (`op`) must be on `PATH` when
+> running `opsops`.
 
 Install `opsops` into your Nix profile:
 
@@ -117,7 +117,7 @@ secrets:
     token:
       type: "script"
       value:
-        content: "printf \"%s\" \"$(gh auth token)\""
+        content: 'printf "%s" "$(gh auth token)"'
   example.com:
     password:
       type: "script"
@@ -145,6 +145,7 @@ secrets:
         account: "IPAEPH0JI3REE8FICHOOVU4CHA"
         uri: "op://Devops/OokahCuZ4fo8ahphie1aiFa0ei/API Tokens/write-only"
 ```
+
 </details>
 
 ### See Canonical Specification
@@ -210,21 +211,22 @@ secrets:
       type: process
       value:
         arguments:
-        - --hip
-        - hop
+          - --hip
+          - hop
         command: zamazingo
         environment: {}
         strip: both
         trailingNewline: crlf
 ```
+
 </details>
 
 ### Render Clear Secrets
 
 > [!WARNING]
 >
-> If 1Password is used, 1Password CLI application (`op`) should be
-> authenticated first:
+> If 1Password is used, 1Password CLI application (`op`) should be authenticated
+> first:
 >
 > ```sh
 > eval $(op signin -f [--account <ACCOUNT>])
@@ -251,12 +253,13 @@ dockerhub:
 influxdb:
   token: mu9aephabeadi7zi8goo9peYo8yae7ge
 ```
+
 </details>
 
 ### Create Snippet for `sops-nix`
 
-To create snippet for `sops-nix` that can be copied/pasted inside the
-`sops-nix` module configuration:
+To create snippet for `sops-nix` that can be copied/pasted inside the `sops-nix`
+module configuration:
 
 ```sh
 opsops snippet sops-nix --input opsops.yaml
@@ -272,6 +275,7 @@ opsops snippet sops-nix --input opsops.yaml
 "influxdb/token" = {};
 "zamazingo/secret" = {};
 ```
+
 </details
 
 ... or with some prefix:
@@ -290,6 +294,7 @@ opsops snippet sops-nix --input opsops.yaml --prefix my_namespace
 "my_namespace/influxdb/token" = { key = "influxdb/token"; };
 "my_namespace/zamazingo/secret" = { key = "zamazingo/secret"; };
 ```
+
 </details>
 
 ## Development

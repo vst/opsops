@@ -2,7 +2,7 @@
   description = "opsops - SOPS(-Nix) Goodies";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
@@ -48,7 +48,7 @@
 
             ## Other essentials:
             pkgs.git
-            pkgs.nixfmt-rfc-style
+            pkgs.nixfmt
             pkgs.prettier
             pkgs.shellcheck
             pkgs.shfmt

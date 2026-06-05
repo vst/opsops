@@ -134,7 +134,7 @@ _run_check "hpack (v$(hpack --numeric-version))" \
 _run_check "nixfmt (v$(nixfmt --numeric-version))" \
   find . -type f -iname "*.nix" -exec nixfmt --check {} +
 
-_run_check "statix (v$(statix --version | cut -f2 -d" "))" \
+_run_check "statix (unknown)" \
   statix check
 
 _run_check "shfmt (v$(shfmt --version))" \

@@ -1,5 +1,5 @@
 ## This resolver should correspond to our nixpkgs version (at least baseline):
-resolver: lts-24.25
+resolver: lts-24.43
 
 ## Our local packages:
 packages:

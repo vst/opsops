@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.9](https://github.com/vst/opsops/compare/v0.0.8...v0.0.9) (2026-07-05)
+
+
+### Bug Fixes
+
+* **deps:** bump stackage to LTS 24.43 ([0a1436c](https://github.com/vst/opsops/commit/0a1436cd81951b7d356feb6fdfe9f4cc6151ffd1))
+* **deps:** upgrade nixpkgs to v26.05 ([18dfa4b](https://github.com/vst/opsops/commit/18dfa4b1b80224ac88a4248460a6c2acd8d400dc))
+
 ## [0.0.8](https://github.com/vst/opsops/compare/v0.0.7...v0.0.8) (2026-01-10)
 
 

@@ -16,17 +16,17 @@ jobs:
     steps:
       - id: "release"
         name: "Release"
-        uses: "googleapis/release-please-action@v4"
+        uses: "googleapis/release-please-action@v5"
 
       - name: "Checkout Codebase"
         if: "${{ steps.release.outputs.release_created }}"
-        uses: "actions/checkout@v6"
+        uses: "actions/checkout@v7"
         with:
           fetch-depth: 0
 
       - name: "Install Nix"
         if: "${{ steps.release.outputs.release_created }}"
-        uses: "DeterminateSystems/nix-installer-action@v21"
+        uses: "DeterminateSystems/nix-installer-action@v22"
 
       - name: "Build Static Executable"
         id: "build_static"

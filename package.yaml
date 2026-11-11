@@ -17,6 +17,7 @@ library:
     - '-Wall'
     - '-Werror'
     - '-Wunused-packages'
+    - '-optP-Wno-nonportable-include-path'
   dependencies:
     - aeson
     - bytestring
@@ -43,6 +44,7 @@ executables:
       - '-threaded'
       - '-rtsopts'
       - '-with-rtsopts=-N'
+      - '-optP-Wno-nonportable-include-path'
     dependencies:
       - opsops
 tests:
@@ -56,6 +58,7 @@ tests:
       - '-threaded'
       - '-rtsopts'
       - '-with-rtsopts=-N'
+      - '-optP-Wno-nonportable-include-path'
     dependencies: []
   opsops-doctest:
     main: doctest.hs
@@ -64,6 +67,7 @@ tests:
       - '-Wall'
       - '-Werror'
       - '-threaded'
+      - '-optP-Wno-nonportable-include-path'
     dependencies:
       - opsops
       - doctest

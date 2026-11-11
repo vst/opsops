@@ -2,4 +2,4 @@ packages:
   *.cabal
 
 package *
-  ghc-options: -fwrite-ide-info
+  ghc-options: -fwrite-ide-info -optP-Wno-nonportable-include-path

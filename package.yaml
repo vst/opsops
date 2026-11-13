@@ -45,6 +45,11 @@ executables:
       - '-with-rtsopts=-N'
     dependencies:
       - opsops
+    ## Only the library needs Paths_opsops. Building it here as well
+    ## breaks Nix builds on case-insensitive filesystems (macOS).
+    when:
+      - condition: false
+        other-modules: Paths_opsops
 tests:
   opsops-test:
     main: Spec.hs

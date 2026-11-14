@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.10](https://github.com/vst/opsops/compare/v0.0.9...v0.0.10) (2026-11-14)
+
+
+### Bug Fixes
+
+* **build:** do not build `Paths_opsops` for the executable ([73a762c](https://github.com/vst/opsops/commit/73a762c17c3cc569e1cbf399ba8bbe000d9169ea))
+* **deps:** bump flake inputs ([2a7337d](https://github.com/vst/opsops/commit/2a7337de5f1056f915e75c9c3be12da42066576a))
+
 ## [0.0.9](https://github.com/vst/opsops/compare/v0.0.8...v0.0.9) (2026-07-05)
 
 

@@ -1,5 +1,5 @@
 name: opsops
-version: 0.0.9 # x-release-please-version
+version: 0.0.10 # x-release-please-version
 github: vst/opsops
 license: MIT
 author: Vehbi Sinan Tunalioglu
